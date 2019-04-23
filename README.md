@@ -1,5 +1,3 @@
-[![Throughput Graph](https://graphs.waffle.io/kubedb/project/throughput.svg)](https://waffle.io/kubedb/project/metrics/throughput)
-
 # project
 KubeDB Project Management Repository
 
