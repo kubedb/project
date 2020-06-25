@@ -4,8 +4,8 @@ metadata:
   name: myops
   namespace: demo
 spec:
+  type: HorizontalScaling
   databaseRef:
     name: my-group
-  type: HorizontalScaling  
   horizontalScaling:
     member: 5

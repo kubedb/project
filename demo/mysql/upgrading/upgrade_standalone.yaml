@@ -4,8 +4,8 @@ metadata:
   name: myopsreq-standalone
   namespace: demo
 spec:
+  type: Upgrade
   databaseRef:
     name: my-standalone
-  type: Upgrade
   upgrade:
     targetVersion: "8.0.20"

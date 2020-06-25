@@ -4,8 +4,8 @@ metadata:
   name: myopsreq-group
   namespace: demo
 spec:
+  type: Upgrade
   databaseRef:
     name: my-group
-  type: Upgrade
   upgrade:
     targetVersion: "8.0.20"
