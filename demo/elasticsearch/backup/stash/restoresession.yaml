@@ -1,0 +1,31 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: RestoreSession
+metadata:
+  name: sample-elasticsearch-restore
+  namespace: demo
+  labels:
+    app.kubernetes.io/name: elasticsearches.kubedb.com
+spec:
+  task:
+    name: elasticsearch-restore-7.3.2-v5
+    params:
+    - name: args
+      value: --includeType=data
+  repository:
+    name: gcs-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: sample-elasticsearch
+  interimVolumeTemplate:
+    metadata:
+      name: stash-restore-tmp-storage
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "standard"
+      resources:
+        requests:
+          storage: 1Gi
+  rules:
+  - snapshots: [latest]
