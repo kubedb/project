@@ -115,7 +115,7 @@ Forwarding from [::1]:9200 -> 9200
 - Show available indexes
 
 ```bash
-❯ curl -X GET "$USER:$PASSWORD@localhost:9200/_cat/indices?v&s=index&pretty"
+❯ curl -X GET --user "$USER:$PASSWORD" "http://localhost:9200/_cat/indices?v&s=index&pretty"
 
 health status index                  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 yellow open   .signals_accounts      -FiF7-u8T16E_LSrzjDQdQ   1   1          0            0       283b           283b
@@ -128,7 +128,7 @@ green  open   searchguard            gzWWXFVNRImrkvwRIFeFqg   1   0          6  
 - Insert a sample data
 
 ```bash
-❯ curl -X POST "$USER:$PASSWORD@localhost:9200/products/_doc?pretty" -H 'Content-Type: application/json' -d'
+❯ curl -X POST --user "$USER:$PASSWORD" "http://localhost:9200/products/_doc?pretty" -H 'Content-Type: application/json' -d'
 {
     "name": "KubeDB",
     "vendor": "AppsCode Inc.",
@@ -140,7 +140,7 @@ green  open   searchguard            gzWWXFVNRImrkvwRIFeFqg   1   0          6  
 - Insert another sample data
 
 ```bash
-❯ curl -X POST "$USER:$PASSWORD@localhost:9200/products/_doc?pretty" -H 'Content-Type: application/json' -d'
+❯ curl -X POST --user "$USER:$PASSWORD" "http://localhost:9200/products/_doc?pretty" -H 'Content-Type: application/json' -d'
 {
     "name": "Stash",
     "vendor": "AppsCode Inc.",
@@ -152,7 +152,7 @@ green  open   searchguard            gzWWXFVNRImrkvwRIFeFqg   1   0          6  
 - Verify that index `products` has been created automatically
 
 ```bash
-❯ curl -X GET "$USER:$PASSWORD@localhost:9200/_cat/indices?v&s=index&pretty"
+❯ curl -X GET --user "$USER:$PASSWORD" "http://localhost:9200/_cat/indices?v&s=index&pretty"
 health status index                  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 yellow open   .signals_accounts      -FiF7-u8T16E_LSrzjDQdQ   1   1          0            0       283b           283b
 yellow open   .signals_settings      AT6j7FiFSD2Cm8qj8cJVGw   1   1          2            0      7.7kb          7.7kb
@@ -165,7 +165,7 @@ green  open   searchguard            gzWWXFVNRImrkvwRIFeFqg   1   0          6  
 - Show all the documents of `products` index
 
 ```bash
-❯ curl -X GET "$USER:$PASSWORD@localhost:9200/products/_search?pretty"
+❯ curl -X GET --user "$USER:$PASSWORD" "http://localhost:9200/products/_search?pretty"
 {
   "took" : 94,
   "timed_out" : false,
@@ -356,7 +356,7 @@ backupconfiguration.stash.appscode.com/sample-elasticsearch-backup patched
 **Delete sample data:**
 
 ```bash
-❯ curl -X DELETE "$USER:$PASSWORD@localhost:9200/products?pretty"
+❯ curl -X DELETE --user "$USER:$PASSWORD" "http://localhost:9200/products?pretty"
 {
   "acknowledged" : true
 }
@@ -365,7 +365,7 @@ backupconfiguration.stash.appscode.com/sample-elasticsearch-backup patched
 **Verify that the Index has been deleted:**
 
 ```bash
-❯ curl -X GET "$USER:$PASSWORD@localhost:9200/_cat/indices?v&s=index&pretty"
+❯ curl -X GET --user "$USER:$PASSWORD" "http://localhost:9200/_cat/indices?v&s=index&pretty"
 health status index                  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 yellow open   .signals_accounts      -FiF7-u8T16E_LSrzjDQdQ   1   1          0            0       283b           283b
 yellow open   .signals_settings      AT6j7FiFSD2Cm8qj8cJVGw   1   1          2            0      7.7kb          7.7kb
@@ -427,7 +427,7 @@ sample-elasticsearch-restore   gcs-repo     Succeeded   33
 **Verify Index has been Restored:**
 
 ```bash
-❯ curl -X GET "$USER:$PASSWORD@localhost:9200/_cat/indices?v&s=index&pretty"
+❯ curl -X GET --user "$USER:$PASSWORD" "http://localhost:9200/_cat/indices?v&s=index&pretty"
 health status index                  uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 yellow open   .signals_accounts      -FiF7-u8T16E_LSrzjDQdQ   1   1          0            0       283b           283b
 yellow open   .signals_settings      AT6j7FiFSD2Cm8qj8cJVGw   1   1          2            0      7.7kb          7.7kb
@@ -440,7 +440,7 @@ green  open   searchguard            gzWWXFVNRImrkvwRIFeFqg   1   0          6  
 **Verify Index Data Has Been Restored:**
 
 ```bash
-❯ curl -X GET "$USER:$PASSWORD@localhost:9200/products/_search?pretty"
+❯ curl -X GET --user "$USER:$PASSWORD" "http://localhost:9200/products/_search?pretty"
 {
   "took" : 94,
   "timed_out" : false,
