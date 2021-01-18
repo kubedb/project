@@ -1,0 +1,58 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Elasticsearch
+metadata:
+  name: sample-elasticsearch
+  namespace: demo
+spec:
+  tls:
+    issuerRef:
+      apiGroup: "cert-manager.io"
+      kind: Issuer
+      name: es-selfsigned-issuer
+  enableSSL: true 
+  version: 7.5.2-searchguard
+  storageType: Durable
+  terminationPolicy: WipeOut
+  topology:
+    master:
+      resources:
+        requests:
+          cpu: 300m
+          memory: 600Mi
+      suffix: master
+      replicas: 2
+      storage:
+        storageClassName: "standard"
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+    data:
+      resources:
+        requests:
+          cpu: 300m
+          memory: 600Mi
+      suffix: data
+      replicas: 2   
+      storage:
+        storageClassName: "standard"
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+    ingest:
+      resources:
+        requests:
+          cpu: 300m
+          memory: 600Mi
+      suffix: ingest
+      replicas: 2  
+      storage:
+        storageClassName: "standard"
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
