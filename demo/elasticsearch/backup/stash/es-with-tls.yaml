@@ -1,11 +1,3 @@
-apiVersion: cert-manager.io/v1
-kind: Issuer
-metadata:
-  name: es-selfsigned-issuer
-  namespace: demo
-spec:
-  selfSigned: {}
----
 apiVersion: kubedb.com/v1alpha2
 kind: Elasticsearch
 metadata:
