@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: es-topology-upgrade
+  namespace: demo
+spec:
+  type: Upgrade
+  databaseRef:
+    name: es-topology
+  upgrade:
+    targetVersion: 7.5.2-searchguard

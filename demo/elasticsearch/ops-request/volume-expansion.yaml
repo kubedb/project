@@ -1,0 +1,14 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: es-topology-volume-expansion
+  namespace: demo
+spec:
+  type: VolumeExpansion
+  databaseRef:
+    name: es-topology
+  volumeExpansion:
+    topology:
+      master: 2Gi
+      data: 4Gi
+      ingest: 3Gi

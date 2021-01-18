@@ -1,0 +1,37 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Elasticsearch
+metadata:
+  name: es-topology
+  namespace: demo
+spec:
+  version: 7.1.1-searchguard
+  topology:
+    master:
+      replicas: 1
+      storage:
+        storageClassName: "topolvm-provisioner"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+    data:
+      replicas: 1
+      storage:
+        storageClassName: "topolvm-provisioner"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+    ingest:
+      replicas: 1
+      storage:
+        storageClassName: "topolvm-provisioner"
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  storageType: Durable
+  terminationPolicy: WipeOut

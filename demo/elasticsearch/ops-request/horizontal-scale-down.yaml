@@ -1,0 +1,14 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: es-topology-horizontal-scale-down
+  namespace: demo
+spec:
+  type: HorizontalScaling
+  databaseRef:
+    name: es-topology
+  horizontalScaling:
+    topology:
+      master: 1
+      ingest: 1
+      data: 2
