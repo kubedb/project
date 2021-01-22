@@ -1,0 +1,18 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: es-combined-update-tls
+  namespace: demo
+spec:
+  type: ReconfigureTLS
+  databaseRef:
+    name: es-combined
+  tls:
+    certificates:
+    - alias: transport 
+      subject:
+        organizations:
+        - appscode.com 
+        organizationalUnits:
+        - engineering
+
