@@ -50,4 +50,114 @@ $ kubectl apply -f issuer.yaml
 $ kubectl get issuer -n demo
 NAME        READY   AGE
 es-issuer   True    109m
+
+```
+- We will provide two certificate specifications, http and transport
+- the other certificates will be created by default specification.
+- Apply the yaml:
+
+```
+$ kubectl apply -f add-tls.yaml
+```
+
+```
+// Check the configuration 
+$ kubectl exec -it -n demo es-combined-0 -- cat config/elasticsearch.yml
+
+// Check the certificate
+$  kubectl exec -it -n demo es-combined-0 -- cat config/certs/transport/tls.crt  > transport.crt
+
+$ openssl x509 -text -noout -in transport.crt
+```
+
+
+- Now, we can port-forward the service and check the data
+
+```
+// List indices
+$ curl -XGET -u "admin:$ES_PASSWORD"  "https://localhost:9200/_cat/indices" -k
+```
+
+
+## Update Transport Layer Certificate 
+
+- We gonna change the Organization and the OrganizationUnit for the transport certificate.
+- Apply the yaml:
+
+```
+$ kubectl apply -f update-tls.yaml
+```
+
+```
+// Check the configuration 
+$ kubectl exec -it -n demo es-combined-0 -- cat config/elasticsearch.yml
+
+// Check the certificate
+$  kubectl exec -it -n demo es-combined-0 -- cat config/certs/transport/tls.crt  > transport.crt
+
+$ openssl x509 -text -noout -in transport.crt
+```
+
+
+- Now, we can port-forward the service and check the data
+
+```
+// List indices
+$ curl -XGET -u "admin:$ES_PASSWORD"  "https://localhost:9200/_cat/indices" -k
+```
+
+
+## Rotate Certificate 
+
+- Now, we will rotate all certificates, the certificates will be re-issued again, updating the duration.
+
+- Check the duration again:
+
+```
+$ openssl x509 -text -noout -in transport.crt
+```
+- Apply the yaml:
+
+```
+$ kubectl apply -f rotate-tls.yaml 
+```
+
+- Get the updated certificate, and check the duration again:
+
+```
+// Check the certificate
+$  kubectl exec -it -n demo es-combined-0 -- cat config/certs/transport/tls.crt  > transport.crt
+
+$ openssl x509 -text -noout -in transport.crt
+```
+
+
+- Now, we can port-forward the service and check the data again
+
+```
+// List indices
+$ curl -XGET -u "admin:$ES_PASSWORD"  "https://localhost:9200/_cat/indices" -k
+```
+
+
+## Disable TLS on HTTP Layer 
+
+- Now, we will disable tls on http layer.
+- Apply the yaml:
+  
+```
+$ kubectl apply -f remove-tls.yaml 
+```
+
+
+```
+// Check the configuration 
+$ kubectl exec -it -n demo es-combined-0 -- cat config/elasticsearch.yml
+```
+
+- Now, we can port-forward the service and check the data again
+
+```
+// List indices
+$ curl -XGET "admin:$ES_PASSWORD"  "https://localhost:9200/_cat/indices"
 ```
