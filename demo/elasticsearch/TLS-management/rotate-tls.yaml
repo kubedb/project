@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: es-combined-rotate-tls
+  namespace: demo
+spec:
+  type: ReconfigureTLS
+  databaseRef:
+    name: es-combined
+  tls:
+    rotateCertificates: true

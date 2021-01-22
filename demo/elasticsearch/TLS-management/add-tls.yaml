@@ -1,0 +1,29 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: es-combined-add-tls
+  namespace: demo
+spec:
+  type: ReconfigureTLS
+  databaseRef:
+    name: es-combined
+  tls:
+    issuerRef:
+      apiGroup: "cert-manager.io"
+      kind: Issuer
+      name: es-issuer
+    certificates:
+    - alias: http
+      subject:
+        organizations:
+        - db.com
+      emailAddresses:
+      - abc@kubedb.com 
+    - alias: transport
+      subject:
+        organizations:
+        - mydb.com
+        organizationalUnits:
+        - testing
+        countries:
+        - BD
