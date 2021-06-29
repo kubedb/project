@@ -1,0 +1,46 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mg-rs-tls
+  namespace: demo
+spec:
+  version: "4.1.13-v1"
+  replicaSet: 
+    name: "replicaset"
+  replicas: 3
+  configSecret:
+    name: config
+  sslMode: requireSSL
+  tls:
+    issuerRef:
+      name: mg-issuer
+      kind: Issuer
+      apiGroup: "cert-manager.io"
+    certificates:
+      - alias: client
+        emailAddresses:
+        - abc@appscode.com
+  storageType: Durable
+  storage:
+    storageClassName: "topolvm-provisioner"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  podTemplate:
+    spec:
+      resources:
+        requests:
+          cpu: "1"
+          memory: "1Gi"
+        limits:
+          cpu: "1"
+          memory: "1Gi"
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+           release: prometheus
+        interval: 10s

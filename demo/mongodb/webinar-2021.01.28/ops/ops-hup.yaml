@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: ops-hup
+  namespace: demo
+spec:
+  type: HorizontalScaling
+  databaseRef:
+    name: mg-rs-tls
+  horizontalScaling:
+    replicas: 4

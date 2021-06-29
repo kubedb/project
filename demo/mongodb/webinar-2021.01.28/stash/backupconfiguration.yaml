@@ -1,0 +1,20 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: BackupConfiguration
+metadata:
+  name: mg-rs-backup
+  namespace: demo
+spec:
+  schedule: "0 0 * 12 *"
+  task:
+    name: mongodb-backup-4.2.3-v5
+  repository:
+    name: gcs-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: mg-rs-tls
+  retentionPolicy:
+    name: keep-last-5
+    keepLast: 5
+    prune: true

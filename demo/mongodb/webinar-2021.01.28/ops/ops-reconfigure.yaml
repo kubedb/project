@@ -1,0 +1,14 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: ops-reconfiugre
+  namespace: demo
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: mg-rs-tls
+  configuration:
+    replicaSet:
+      inlineConfig: |
+          net:
+            maxIncomingConnections: 200000
