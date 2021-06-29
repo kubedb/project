@@ -1,0 +1,17 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: ops-vscale
+  namespace: demo
+spec:
+  type: VerticalScaling
+  databaseRef:
+    name: mg-rs-tls
+  verticalScaling:
+    replicaSet:
+      requests:
+        memory: "2Gi"
+        cpu: "1.2"
+      limits:
+        memory: "2Gi"
+        cpu: "1.2"

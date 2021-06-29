@@ -1,0 +1,15 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: ops-tls
+  namespace: demo
+spec:
+  type: ReconfigureTLS
+  databaseRef:
+    name: mg-rs-tls
+  tls:
+    certificates:
+      - alias: client
+        emailAddresses:
+        - xyz@appscode.com
+        - abc@appscode.com

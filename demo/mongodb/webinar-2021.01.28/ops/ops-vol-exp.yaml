@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: ops-vol-exp
+  namespace: demo
+spec:
+  type: VolumeExpansion
+  databaseRef:
+    name: mg-rs-tls
+  volumeExpansion:
+    replicaSet: 2Gi
