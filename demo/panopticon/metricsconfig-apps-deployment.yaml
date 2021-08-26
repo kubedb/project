@@ -1,0 +1,125 @@
+apiVersion: metrics.appscode.com/v1alpha1
+kind: MetricsConfiguration
+metadata:
+  name: apps-deployment
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+  metrics:
+    - name: kube_deployment_created
+      help: "Unix creation timestamp"
+      type: gauge
+      field:
+        path: .metadata.creationTimestamp
+        type: DateTime
+      metricValue:
+        valueFromPath: .metadata.creationTimestamp
+
+    - name: kube_deployment_status_replicas
+      help: "The number of replicas per deployment"
+      type: gauge
+      field:
+        path: .status.replicas
+        type: Integer
+      metricValue:
+        valueFromPath: .status.replicas
+
+    - name: kube_deployment_status_replicas_ready
+      help: "The number of available replicas per deployment."
+      type: gauge
+      field: 
+        path: .status.readyReplicas
+        type: Integer
+      metricValue: 
+        valueFromPath: .status.readyReplicas
+
+    - name: kube_deployment_status_replicas_available
+      help: "The number of available replicas per deployment."
+      type: gauge
+      field: 
+        path: .status.availableReplicas
+        type: Integer
+      metricValue:
+        valueFromPath: .status.availableReplicas
+
+    - name: kube_deployment_status_replicas_updated
+      help: "The number of updated replicas per deployment."
+      type: gauge
+      field: 
+        path: .status.updatedReplicas
+        type: Integer
+      metricValue:
+        valueFromPath: .status.updatedReplicas
+
+    - name: kube_deployment_status_observed_generation
+      help: "The generation observed by the deployment controller."
+      type: gauge
+      field:
+        path: .status.observedGeneration
+        type: Integer
+      metricValue:
+        valueFromPath: .status.observedGeneration
+
+    - name: kube_deployment_status_condition             
+      help: "The current status conditions of a deployment."
+      type: gauge
+      field:
+        path: .status.conditions
+        type: Array
+      labels:
+        - key: type
+          valuePath: .status.conditions[*].type
+        - key: status
+          valuePath: .status.conditions[*].status
+      metricValue:
+        value: 1
+
+    - name: kube_deployment_spec_replicas
+      help: "Number of desired pods for a deployment."
+      type: gauge
+      field:
+        path: .spec.replicas
+        type: Integer
+      metricValue:
+        valueFromPath: .spec.replicas
+
+    - name: kube_deployment_spec_paused       
+      help: "Whether the deployment is paused and will not be processed by the deployment controller."
+      type: gauge
+      params:
+        - key: paused
+          valuePath: .spec.paused
+      metricValue:
+        valueFromExpression: int(paused == 'true')
+
+    - name: kube_deployment_spec_strategy_rollingupdate_max_unavailable   
+      help: "Maximum number of unavailable replicas during a rolling update of a deployment."
+      type: gauge
+      params: 
+        - key: replicas
+          valuePath: .spec.replicas
+        - key: maxUnavailable
+          valuePath: .spec.strategy.rollingUpdate.maxUnavailable
+      metricValue:
+        valueFromExpression: percentage(maxUnavailable, replicas)
+
+    - name: kube_deployment_spec_strategy_rollingupdate_max_surge      
+      help: "Maximum number of replicas that can be scheduled above the desired number of replicas during a rolling update of a deployment."
+      type: gauge
+      params: 
+        - key: replicas
+          valuePath: .spec.replicas
+        - key: maxSurge
+          valuePath: .spec.strategy.rollingUpdate.maxSurge
+      metricValue:
+        valueFromExpression: percentage(maxSurge, replicas, true)
+
+    - name: kube_deployment_metadata_generation
+      help: "Sequence number representing a specific generation of the desired state."
+      type: gauge
+      field:
+        path: .metadata.generation
+        type: Integer
+      metricValue: 
+        valueFromPath: .metadata.generation
