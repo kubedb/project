@@ -1,0 +1,22 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MariaDB
+metadata:
+  name: sample-mariadb
+  namespace: demo
+spec:
+  version: "10.4.17"
+  replicas: 3
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut
+  tls:
+    issuerRef:
+      apiGroup: cert-manager.io
+      kind: Issuer
+      name: md-issuer
