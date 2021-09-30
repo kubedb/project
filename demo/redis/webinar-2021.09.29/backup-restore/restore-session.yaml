@@ -1,0 +1,18 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: RestoreSession
+metadata:
+  name: redis-rest
+  namespace: demo
+  labels:
+    app.kubernetes.io/managed-by: kubedb.com
+    app.kubernetes.io/name: redises.kubedb.com
+spec:
+  repository:
+    name: s3-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: restore-rd
+  rules:
+  - snapshots: [latest]

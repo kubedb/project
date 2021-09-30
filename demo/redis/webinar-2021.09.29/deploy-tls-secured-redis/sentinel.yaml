@@ -1,0 +1,28 @@
+apiVersion: kubedb.com/v1alpha2
+kind: RedisSentinel
+metadata:
+  name: sen
+  namespace: demo
+spec:
+  version: 6.2.5
+  replicas: 3 
+  storageType: Durable
+  tls:
+    issuerRef:
+      apiGroup: cert-manager.io
+      name: ca-issuer
+      kind: Issuer
+  storage:
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+  terminationPolicy: WipeOut
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: kube-prometheus-stack
