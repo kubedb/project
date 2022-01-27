@@ -1,0 +1,28 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MySQL
+metadata:
+  name: mysql
+  namespace: demo
+spec:
+  version: "8.0.27-v1"
+  replicas: 3
+  topology:
+    mode: GroupReplication
+  allowedReadReplicas:
+    namespaces:
+      from: Selector
+      selector:
+        matchLabels:
+         kubernetes.io/metadata.type: read-replica
+    selector:
+      matchLabels:
+        kubedb.com/instance_name: ReadReplica
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  terminationPolicy: WipeOut

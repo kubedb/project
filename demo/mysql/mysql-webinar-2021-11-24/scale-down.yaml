@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MySQLOpsRequest
+metadata:
+  name: scale-down
+  namespace: demo
+spec:
+  type: HorizontalScaling  
+  databaseRef:
+    name: mysql
+  horizontalScaling:
+    member: 3

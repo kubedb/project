@@ -1,0 +1,26 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MySQL
+metadata:
+  name: mysql-read
+  namespace: test
+  labels:
+    kubedb.com/instance_name: ReadReplica
+spec:
+  version: "8.0.27-v1"
+  topology:
+    mode: ReadReplica
+    readReplica:
+      sourceRef:
+          name: mysql
+          namespace: demo
+  replicas: 1
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  terminationPolicy: WipeOut
+

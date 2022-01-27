@@ -1,0 +1,28 @@
+apiVersion: schema.kubedb.com/v1alpha1
+kind: MySQLDatabase
+metadata:
+  name: schema-script
+  namespace: demoy
+spec:
+  database:
+    serverRef:
+      name: mysql-server
+      namespace: dev
+    config: 
+      name: demo_script
+  vaultRef:
+    name: vault
+    namespace: dev
+  accessPolicy:
+    subjects:
+      - kind: ServiceAccount
+        name: "script-tester"
+        namespace: "demoy"
+    defaultTTL: "10m"
+  init: 
+    initialized: false
+    script: 
+      scriptPath: "etc/config"
+      configMap:
+        name: scripter
+  deletionPolicy: "Delete"

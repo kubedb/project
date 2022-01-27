@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MySQLOpsRequest
+metadata:
+  name: upgrade-to-latest
+  namespace: demo
+spec:
+  databaseRef:
+    name: mysql
+  type: Upgrade
+  upgrade:
+    targetVersion: "8.0.27"

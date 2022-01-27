@@ -1,0 +1,28 @@
+apiVersion: schema.kubedb.com/v1alpha1
+kind: MySQLDatabase
+metadata:
+  name: schema-restore
+  namespace: demoz
+spec:
+  database:
+    serverRef:
+      name: mysql-server
+      namespace: dev
+    config: 
+      name: demo_restore
+  vaultRef:
+    name: vault
+    namespace: dev
+  accessPolicy:
+    subjects:
+      - kind: ServiceAccount
+        name: "snapshot-tester"
+        namespace: "demoz"
+    defaultTTL: "10m"
+  init: 
+    initialized: false
+    snapshot:
+      repository:
+        name: repository
+        namespace: demoz
+  deletionPolicy: "Delete"
