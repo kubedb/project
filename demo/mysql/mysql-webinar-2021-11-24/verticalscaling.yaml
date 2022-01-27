@@ -1,0 +1,17 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MySQLOpsRequest
+metadata:
+  name: vertical-scaling-2
+  namespace: demo
+spec:
+  type: VerticalScaling  
+  databaseRef:
+    name: mysql
+  verticalScaling:
+    mysql:
+      requests:
+        memory: "3Gi"
+        cpu: "1200m"
+      limits:
+        memory: "3Gi"
+        cpu: "1200m"
