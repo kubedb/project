@@ -1,0 +1,24 @@
+apiVersion: dashboard.kubedb.com/v1alpha1
+kind: ElasticsearchDashboard
+metadata:
+  name: es-cluster-dashboard
+  namespace: log-manager
+spec:
+  replicas: 1
+  enableSSL: true
+  authSecret:
+    name: es-cluster-user-cred
+  configSecret:
+    name: custom-configuration
+  databaseRef:
+    name: es-cluster
+  serviceTemplates:
+    - alias: primary
+      spec:
+        ports:
+          - port: 5601
+  tls:
+    certificates:
+      - alias: database-client
+        secretName: es-cluster-client-cert
+  terminationPolicy: WipeOut

@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logstash-configmap
+  namespace: log-manager
+data:
+  logstash.yml: |
+    http.host: "0.0.0.0"
+    path.config: /usr/share/logstash/pipeline
+  logstash.conf: |
+    # all input will come from filebeat, no local logs
+    input {
+      beats {
+        port => 5044
+      }
+    }
+    filter {
+     
+    }
+    output {
+        elasticsearch {
+        user => "elastic"
+        password => "p3KAOdO$mypJ~ZnV"
+        hosts => ["https://es-cluster.log-manager.svc:9200"]
+        cacert => "/usr/share/logstash/certs/ca.crt"
+        ssl_certificate_verification => false
+        ilm_rollover_alias => "k8s-logs"
+        ilm_pattern => "000001"
+        ilm_policy => "k8s-logs"
+        template_name => "k8s-logs"
+        }
+    }
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: logstash
+  namespace: log-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: logstash
+  template:
+    metadata:
+      labels:
+        name: logstash
+    spec:
+      containers:
+       - name: logstash
+         image: logstash:7.14.0
+         ports:
+         - containerPort: 5044
+         volumeMounts:
+         - name: logstash-pipeline-volume
+           mountPath: /usr/share/logstash/pipeline
+         - name: config-volume
+           mountPath: /usr/share/logstash/config
+         - name: ca
+           mountPath: /usr/share/logstash/certs
+         command:
+         - logstash
+         resources:
+          limits:
+            cpu: 500m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+      volumes:
+       - name: config-volume
+         configMap:
+          name: logstash-configmap
+          items:
+          - key: logstash.yml
+            path: logstash.yml
+       - name: logstash-pipeline-volume
+         configMap:
+          name: logstash-configmap
+          items:
+          - key: logstash.conf
+            path: logstash.conf
+       - name: ca
+         secret:
+          secretName: es-cluster-archiver-cert
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: log-manager
+  name: logstash-service
+  labels:
+    name: logstash
+spec:
+  selector:
+      name: logstash
+  ports:
+    - port: 5044
+      protocol: TCP
+      targetPort: 5044
+  type: ClusterIP
