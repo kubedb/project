@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f718a174-a502-487e-8a55-a3a9f0725d78" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02/elasticsearch.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02/elasticsearchDashboard.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02/elasticsearchDashboard_customization.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02/filebeat.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02/logstash.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +39,7 @@
     <property name="go.sdk.automatically.set" value="true" />
     <property name="go.watchers.conflict.with.on.save.actions.check.performed" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/demo/elasticsearch/webinar-2022.03.02" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
