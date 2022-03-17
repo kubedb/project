@@ -1,0 +1,21 @@
+namespace: demo
+dbName: sample-mariadb
+alert:
+  ruleSelector:
+    app: kube-prometheus-stack
+    release: prometheus
+  rules:
+    opsrequest:
+      enabled: true
+      kubeDBMariaDBOpsRequestOnProgress:
+        enabled: true
+        duration: "0m"
+        severity: warning
+      kubeDBMariaDBOpsRequestStatusProgressingToLong:
+        enabled: true
+        duration: "30m"
+        severity: critical
+      kubeDBMariaDBOpsRequestFailed:
+        enabled: true
+        duration: "0m"
+        severity: critical

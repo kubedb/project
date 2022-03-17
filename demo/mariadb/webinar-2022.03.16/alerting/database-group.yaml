@@ -1,0 +1,22 @@
+namespace: demo
+dbName: sample-mariadb
+alert:
+  ruleSelector:
+    app: kube-prometheus-stack
+    release: prometheus
+  rules:
+    database:
+      enabled: false
+      mySQLInstanceDown:
+        enabled: true
+        duration: "0m"
+        severity: critical
+      mySQLServiceDown:
+        enabled: true
+        duration: "0m"
+        severity: critical
+      mySQLTooManyConnections:
+        enabled: true
+        duration: "2m"
+        val: 80
+        severity: warning

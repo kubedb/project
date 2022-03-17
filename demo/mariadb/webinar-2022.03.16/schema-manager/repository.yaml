@@ -1,0 +1,16 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Repository
+metadata:
+  name: repository
+  namespace: demoz
+spec:
+  backend:
+    s3:
+      endpoint: https://us-southeast-1.linodeobjects.com
+      bucket: schema-test-mysql
+      region: us-southeast-1
+      prefix: backup/mysqlfivecompat #backup/withPrimaryKey
+    storageSecretName: s3-secret
+  usagePolicy:
+    allowedNamespaces:
+      from: All

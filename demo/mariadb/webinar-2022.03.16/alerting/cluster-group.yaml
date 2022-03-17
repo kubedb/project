@@ -1,0 +1,14 @@
+namespace: demo
+dbName: sample-mariadb
+alert:
+  ruleSelector:
+    app: kube-prometheus-stack
+    release: prometheus
+  rules:
+    cluster:
+      enabled: true
+      galeraReplicationLatencyTooLong:
+        enabled: true
+        val: 0.00005
+        duration: "1m"
+        severity: warning

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scripter
+  namespace:  demoy
+data:
+  script.sql: |-
+    use demo_script;
+    create table Product(Type varchar(30),Name varchar(30),Price integer, primary key(Name));
+    insert into Product(Type,Name,Price) value('Book','LearnC++',10);
+    insert into Product(Type,Name,Price) value('Toy','Crayon',5);

@@ -1,0 +1,17 @@
+namespace: demo
+dbName: sample-mariadb
+alert:
+  ruleSelector:
+    app: kube-prometheus-stack
+    release: prometheus
+  rules:
+    kubedb:
+      enabled: true
+      kubeDBMariaDBPhaseNotReady:
+        enabled: false
+        duration: "1m"
+        severity: critical
+      kubeDBMariaDBPhaseCritical:
+        enabled: true
+        duration: "15m"
+        severity: warning

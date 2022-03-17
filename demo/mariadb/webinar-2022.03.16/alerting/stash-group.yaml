@@ -1,0 +1,22 @@
+namespace: demo
+dbName: sample-mariadb
+alert:
+  ruleSelector:
+    app: kube-prometheus-stack
+    release: prometheus
+  rules:
+    stash:
+      enabled: true
+      mariaDBStashBackupSessionFailed:
+        enabled: true
+        duration: "0m"
+        severity: critical
+      mariaDBStashRestoreSessionFailed:
+        enabled: true
+        duration: "0m"
+        severity: critical
+      mariaDBStashNoBackupSessionForTooLong:
+        enabled: true
+        duration: "0m"
+        val: 18000
+        severity: warning
