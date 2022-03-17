@@ -1,0 +1,24 @@
+apiVersion: schema.kubedb.com/v1alpha1
+kind: MariaDBDatabase
+metadata:
+  name: schema-basic
+  namespace: demox
+spec:
+  database:
+    serverRef:
+      name: mariadb-server
+      namespace: dev
+    config: 
+      name: demo_user
+      characterSet: big5
+      comment: "'hello all'"
+  vaultRef:
+    name: vault
+    namespace: dev
+  accessPolicy:
+    subjects:
+      - kind: ServiceAccount
+        name: "tester"
+        namespace: "demox"
+    defaultTTL: "10m"
+  deletionPolicy: "Delete"

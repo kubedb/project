@@ -1,0 +1,29 @@
+apiVersion: schema.kubedb.com/v1alpha1
+kind: MariaDBDatabase
+metadata:
+  name: schema-restore
+  namespace: demoz
+spec:
+  database:
+    serverRef:
+      name: mariadb-server
+      namespace: dev
+    config: 
+      name: demo_restore
+      characterSet: utf8
+  vaultRef:
+    name: vault
+    namespace: dev
+  accessPolicy:
+    subjects:
+      - kind: ServiceAccount
+        name: "snapshot-tester"
+        namespace: "demoz"
+    defaultTTL: "10m"
+  init: 
+    initialized: false
+    snapshot:
+      repository:
+        name: repository
+        namespace: demoz
+  deletionPolicy: "Delete"
