@@ -1,0 +1,12 @@
+apiVersion: supervisor.appscode.com/v1alpha1
+kind: MaintenanceWindow
+metadata:
+  name: mw-default
+  namespace: demo
+spec:
+  isDefault: true
+  timezone: Asia/Dhaka
+  days:
+    Wednesday:
+      - start: 10:57PM
+        end: 11:50PM

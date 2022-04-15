@@ -1,0 +1,9 @@
+apiVersion: supervisor.appscode.com/v1alpha1
+kind: ClusterMaintenanceWindow
+metadata:
+  name: default-cmw
+spec:
+  isDefault: true
+  dates:
+    - start: 2022-04-13T05:13:00Z
+      end: 2022-04-13T23:59:59Z
