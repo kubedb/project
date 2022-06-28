@@ -1,0 +1,21 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mongo-alone
+  namespace: db3
+spec:
+  allowedSchemas:
+    namespaces:
+      from: Selector
+      selector:
+        matchLabels:
+         kubernetes.io/metadata.name: dev
+  version: "4.4.6"
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Mi
