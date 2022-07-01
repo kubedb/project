@@ -1,0 +1,44 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mg-sh
+  namespace: db
+spec:
+  version: "4.4.6"
+  arbiter:
+    podTemplate: {}
+  shardTopology:
+    configServer:
+      replicas: 3
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      storage:
+        resources:
+          requests:
+            storage: 200Mi
+        storageClassName: standard
+    mongos:
+      replicas: 2
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+    shard:
+      configSecret:
+        name: custom-config
+      replicas: 2
+      shards: 2
+      storage:
+        resources:
+          requests:
+            storage: 500Mi
+        storageClassName: standard
+  terminationPolicy: WipeOut
+
+# kubectl create secret generic -n db custom-config --from-file=./mongod.conf

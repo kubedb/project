@@ -1,0 +1,17 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: reconfigure
+  namespace: db
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: mg-sh
+  configuration:
+    shard:
+      inlineConfig: |-
+        net:
+            maxIncomingConnections: 22000
+    arbiter:
+      configSecret:
+        name: log-config

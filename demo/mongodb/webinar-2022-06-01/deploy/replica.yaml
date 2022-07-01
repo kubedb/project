@@ -1,0 +1,39 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mg-rs
+  namespace: db
+spec:
+  version: "4.4.6"
+  replicaSet:
+    name: "replicaset"
+  podTemplate:
+    spec:
+      resources:
+        requests:
+          cpu: "200m"
+          memory: "200Mi"
+  replicas: 2
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 300Mi
+  sslMode: requireSSL
+  tls:
+    issuerRef:
+      apiGroup: "cert-manager.io"
+      kind: Issuer
+      name: mongo-ca-issuer
+  clusterAuthMode: x509
+  arbiter:
+    podTemplate: 
+      spec:
+        resources:
+          requests:
+            cpu: "600m"
+            memory: "600Mi"
+  terminationPolicy: WipeOut
