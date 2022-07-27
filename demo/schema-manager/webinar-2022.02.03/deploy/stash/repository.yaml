@@ -1,0 +1,18 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Repository
+metadata:
+  name: minio-repo
+  namespace: db
+spec:
+  backend:
+    s3:
+      endpoint: http://minio.minio.svc:9000
+      bucket: backup-mongo
+      prefix: replica
+    storageSecretName: minio-secret
+  usagePolicy:
+    allowedNamespaces:
+      from: All #Selector
+      # Selector:
+      #   matchLabels:
+      #     "kubernetes.io/metadata.name": "dev"

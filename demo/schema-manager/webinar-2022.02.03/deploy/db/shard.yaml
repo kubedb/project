@@ -1,0 +1,49 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mongo-shard
+  namespace: db2
+spec:
+  allowedSchemas:
+    namespaces:
+      from: Selector
+      selector:
+        matchLabels:
+         kubernetes.io/metadata.name: dev
+  version: 4.4.6
+  shardTopology:
+    configServer:
+      replicas: 3
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      storage:
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: standard
+    mongos:
+      replicas: 2
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+    shard:
+      replicas: 3
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "100Mi"
+      shards: 2
+      storage:
+        resources:
+          requests:
+            storage: 100Mi
+        storageClassName: standard
