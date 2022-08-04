@@ -1,0 +1,42 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mg-rs
+  namespace: demo
+spec:
+  version: "percona-4.4.10"
+  replicas: 3
+  replicaSet:
+    name: "rs1"
+  podTemplate:
+    spec:
+      resources:
+        requests:
+          cpu: "500m"
+          memory: "500Mi"
+        limits:
+          cpu: "4"
+          memory: "2Gi"
+  configSecret:
+    name: inmemory-config
+  storageEngine: inMemory
+  storageType: Ephemeral
+  sslMode: requireSSL
+  tls:
+    issuerRef:
+      apiGroup: "cert-manager.io"
+      kind: Issuer
+      name: mongo-ca-issuer
+  clusterAuthMode: x509
+#  monitor:
+#    agent: prometheus.io/operator
+#    prometheus:
+#      exporter:
+#        args:
+#          - --compatible-mode
+#      serviceMonitor:
+#        labels:
+#          release: prometheus
+#        interval: 10s
+  terminationPolicy: WipeOut
+

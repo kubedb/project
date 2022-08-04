@@ -1,0 +1,27 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mg-sh
+  namespace: demo
+spec:
+  version: "percona-4.4.10"
+  storageEngine: inMemory
+  shardTopology:
+    configServer:
+      replicas: 3
+    mongos:
+      replicas: 2
+    shard:
+      replicas: 3
+      shards: 2
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "256m"
+              memory: "256Mi"
+            limits:
+              cpu: "4"
+              memory: "2Gi"
+  storageType: Ephemeral
+  terminationPolicy: WipeOut
