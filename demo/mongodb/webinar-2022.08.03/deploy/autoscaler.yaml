@@ -1,0 +1,28 @@
+apiVersion: autoscaling.kubedb.com/v1alpha1
+kind: MongoDBAutoscaler
+metadata:
+  name: mg-as-rs
+  namespace: demo
+spec:
+  opsRequestOptions:
+    readinessCriteria:
+      oplogMaxLagSeconds: 10
+      objectsCountDiffPercentage: 10
+    timeout: 2m
+    apply: "IfReady"
+  databaseRef:
+    name: mg-rs
+  compute:
+    replicaSet:
+      trigger: "On"
+      podLifeTimeThreshold: 3m
+      minAllowed:
+        cpu: 600m
+        memory: 250Mi
+      maxAllowed:
+        cpu: 1
+        memory: 1Gi
+      controlledResources: ["cpu", "memory"]
+      inMemoryStorage:
+        usageThresholdPercentage: 70
+        scalingFactorPercentage: 50

@@ -1,0 +1,21 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: vertical
+  namespace: demo
+spec:
+  configuration:
+    replicaSet:
+      configSecret:
+        name: inmemory-config
+  databaseRef:
+    name: mg-rs
+  type: VerticalScaling
+  verticalScaling:
+    replicaSet:
+      limits:
+        cpu: 4800m
+        memory: 7Gi
+      requests:
+        cpu: 600m
+        memory: 1Gi
