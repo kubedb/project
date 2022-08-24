@@ -1,0 +1,5 @@
+mysql_variables=
+{
+    max_connections=1024
+    default_schema="information_schema"
+}

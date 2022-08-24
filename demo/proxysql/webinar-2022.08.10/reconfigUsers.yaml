@@ -1,0 +1,55 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ProxySQLOpsRequest
+metadata:
+  name: add-users
+  namespace: demo
+spec:
+  type: Reconfigure  
+  proxyRef:
+    name: proxy-server
+  configuration:
+    mysqlUsers:
+      users: 
+      - username: A_Add
+        active: 1
+        default_hostgroup: 2  
+      - username: B_Add
+        active: 1
+        default_hostgroup: 3
+      reqType: add
+---
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ProxySQLOpsRequest
+metadata:
+  name: delete-users
+  namespace: demo
+spec:
+  type: Reconfigure  
+  proxyRef:
+    name: proxy-server
+  configuration:
+    mysqlUsers:
+      users: 
+      - username: C_Del
+      - username: D_Del
+      reqType: delete
+---
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ProxySQLOpsRequest
+metadata:
+  name: update-users
+  namespace: demo
+spec:
+  type: Reconfigure  
+  proxyRef:
+    name: proxy-server
+  configuration:
+    mysqlUsers:
+      users: 
+      - username: E_Upd
+        active: 0
+        default_hostgroup: 3
+      - username: F_Upd
+        active: 1
+        default_hostgroup: 3
+      reqType: update
