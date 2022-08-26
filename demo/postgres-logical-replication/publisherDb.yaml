@@ -1,0 +1,20 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: publisher-db
+  namespace: demo
+spec:
+  version: "14.1"
+  configSecret:
+    name: pg-configuration
+  replicas: 3
+  standbyMode: Hot
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut

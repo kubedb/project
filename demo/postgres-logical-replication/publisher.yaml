@@ -1,0 +1,28 @@
+apiVersion: replication.kubedb.com/v1alpha1
+kind: Publisher
+metadata:
+  name: publisher-sample
+  namespace: demo
+spec:
+  name: my_pub
+  serverRef:
+    name: publisher-db
+  databaseName: pub
+  allowedSubscribers:
+    namespaces:
+      from: Selector
+      selector:
+        matchLabels:
+         kubernetes.io/metadata.name: test
+    selector:
+      matchLabels:
+        replication.kubedb.com/instance_name: subscriber  
+  tables:
+    - table_1
+  parameters:
+    operations:
+      - insert
+      - update
+      - delete
+      - truncate
+  deletionPolicy: Delete

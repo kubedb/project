@@ -1,0 +1,20 @@
+apiVersion: replication.kubedb.com/v1alpha1
+kind: Subscriber
+metadata:
+  name: subscriber-one
+  namespace: test
+  labels:
+    replication.kubedb.com/instance_name: subscriber
+spec:
+  name: my_sub
+  serverRef:
+    name: subscriber-db
+  databaseName: sub
+  parameters:
+    tableCreationPolicy: IfNotPresent
+  publisher: 
+    managed:
+      namespace: demo
+      refs:
+        - name: publisher-sample
+  deletionPolicy: Delete
