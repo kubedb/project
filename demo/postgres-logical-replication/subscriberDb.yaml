@@ -1,0 +1,20 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: subscriber-db
+  namespace: test
+spec:
+  version: "14.1"
+  replicas: 3
+  configSecret:
+    name: pg-configuration
+  standbyMode: Hot
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut
