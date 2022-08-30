@@ -56,6 +56,8 @@ $ curl -XPOST -k -u 'admin:v1CX*BN$~xTFUNyz' "https://localhost:9200/_cache/clea
 $ curl -XPUT -k 'https://localhost:9200/_cluster/settings' -d '{ "persistent" : { "indices.breaker.total.limit" : "70%" } }'
 ```
 
+- [Circuit Breaker Issue](https://github.com/kubedb/project/issues/836)
+
 ### Setting
 
 - Index setting:
