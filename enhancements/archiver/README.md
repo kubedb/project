@@ -4,27 +4,24 @@
 ### Archiver YAML
 ```yaml
 apiVersion: archiver.kubedb.com/v1alpha1
-kind: Archiver
+kind: MongoDBArchiver
 metadata:
   name: archiver-demo
   namespace: kubedb
 spec:
   usagePolicy:
     allowedNamespace:
-      from:
-      selector:
-    allowedApplications: // empty means all
-    - apiGroup: kubedb.com/v1alpha1
-      resources: [ mongodbs,elasticsearches]
-      selector: // label selector
+      from: <>
+      selector: <>
+    resourceSelector: <>
   pause: true
+  retentionPolicy:
+      name: keep-last-5
+      namespace: stash
   fullBackup:
     driver: "CSISnapshotter"
     csiSnapshotter:
       volumeSnapshotClassName: "longhorn-snapshot-vsc"
-    retentionPolicy:
-      name: keep-last-5
-      namespace: stash
     scheduler:
       schedule: "0 * * * *"
       concurrencyPolicy: Forbid
@@ -34,14 +31,14 @@ spec:
         backoffLimit: 1
         podTemplate:
           serviceAccountName: "my-sample-sa"
-    runtimeSettings:
+    runtimeSettings: <>
     failurePolicy: Retry
     retryConfig:
       maxRetry: 2
       delay: 2m
   walBackup:
-    runtimeSettings:
-    config: (rawExtension)
+    runtimeSettings: <>
+    config: <> # rawExtension or different for each?
   backupStorage:
     ref:
       apiGroup: storage.kubestash.com
@@ -52,17 +49,20 @@ spec:
   deletionPolicy: "Delete" / "WipeOut" / "DoNotDelete"
 status:
   phase: "Current" 
-  failedOpsReq:
+  opsRequests:
     - appRef: 
-      kind: ""
-      reason: ""
+	  	name: ""
+	  	namespace: ""
+	  opsReqName: ""
+	  opsReqPhase: ""
 ```
 
 ### Archiver Controller Steps:
 - Add/Update/Sync:
   - Select databases according to `usagePolicy`.
-  - Check if archiver is configured for each db.
-    - if not then configure using OpsRequest CR.
+  - Check if each db is configured with the latest archiver (according to the `spec-hash` annotations).
+    - if not then configure using OpsRequest CR. 
+    	- If any previous ops req is in `Failed` state don't create a new one.
 - Delete:
   - according to deletionPolicy create OpsRequest CR.
 
@@ -92,7 +92,7 @@ spec:
   - Create ArchiveInfo CR
   - Inject walg sidecar
   - Restart pods
-  - Update `db.status.archiverResourceVersion`
+  - Update `db.spec.archiver` and `db.status.archiver`
 - If `Operation == Disable`
   - Delete BackupConfiguration CR
   - Remove sidecar.
@@ -101,8 +101,19 @@ spec:
 ## DB Changes (For Restore)
 ### DB YAML
 ```yaml
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  annotations:
+  	archiver.kubedb.com/spec-hash: "dfgdfgdg"
+  name: archiver-ops-demo
+  namespace: demo
 spec:
-  disableArchiver: true
+  archiver:
+    pause: true
+    ref:
+      name: <>
+      namespace: <>
   init:
     archiver:
       pitr:
@@ -113,11 +124,24 @@ spec:
         namespace: stash
 status:
   archiver:
-    resourceVersion: ""
-    lastOpsReqStatus: ""
+    phase: ""
+    conditions: ""
 ```
 
-### DB Controller Steps
+### DB Controller
+
+#### Backup Steps
+- From mutator: 
+	- Check if there is any archiver that is selecting this database
+	- If yes, then update `db.spec.archiver`
+- From db operator:
+	- If `db.spec.archiver != nil`
+		- Create BackupConfiguration CR
+		- Create ArchiveInfo CR
+		- Inject walg sidecar
+		- Continue with other db reconcilation tasks.
+
+#### Restore Steps
 - Get snapshot list and oplog time from backupStorage 
 - Pick the snapshot that is before the PITR time
 - Restore db using that snapshot 
@@ -125,7 +149,7 @@ status:
 - Restore db on that time
 
 ## Stash Changes
-### ArchiverInfo CR YAML
+### ArchiveInfo CR YAML
 ```yaml
 apiVersion: storage.kubestash.com/v1alpha1
 kind: ArchiveInfo
