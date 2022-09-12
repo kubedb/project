@@ -49,12 +49,11 @@ spec:
   deletionPolicy: "Delete" / "WipeOut" / "DoNotDelete"
 status:
   phase: "Current" 
-  opsRequests:
-    - appRef: 
-        name: ""
-        namespace: ""
-        opsReqName: ""
-        opsReqPhase: ""
+  databaseRefs:
+    - name: ""
+      namespace: ""
+      opsReqName: ""
+      opsReqPhase: ""
 ```
 
 ### Archiver Controller Steps:
