@@ -1,0 +1,31 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: demo-pg
+  namespace: demo
+spec:
+  version: "13.6-bullseye"
+  replicas: 1
+  standbyMode: Hot
+  storageType: Durable
+  storage:
+    storageClassName: "longhorn"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut
+  archiver:
+    enableWalBackup: true
+    backupStorage:
+      prefix: "walg-test"
+      storageRef:
+        name: my-s3-secret
+        namespace: demo
+    fullBackup:
+      schedule: "*/1 * * * *"
+      driver: "CSISnapshotter"
+      csiSnapshooter:
+        volumeSnapshotClassName: "longhorn-snapshot-vsc"
+
