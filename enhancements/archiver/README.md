@@ -51,10 +51,10 @@ status:
   phase: "Current" 
   opsRequests:
     - appRef: 
-	  	name: ""
-	  	namespace: ""
-	  opsReqName: ""
-	  opsReqPhase: ""
+        name: ""
+        namespace: ""
+        opsReqName: ""
+        opsReqPhase: ""
 ```
 
 ### Archiver Controller Steps:
