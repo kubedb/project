@@ -124,7 +124,7 @@ spec:
 status:
   archiver:
     phase: ""
-    conditions: ""
+    conditions: []
 ```
 
 ### DB Controller
