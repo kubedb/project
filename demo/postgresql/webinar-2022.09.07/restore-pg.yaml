@@ -1,0 +1,26 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: restore-pg
+  namespace: demo
+spec:
+  version: "13.6-bullseye"
+  replicas: 1
+  standbyMode: Hot
+  storageType: Durable # Ephemeral
+  storage:
+    storageClassName: "longhorn"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut
+  archiveRecovery:
+    pitr:
+      targetTime: "2022-09-07 15:16:30.016069+00" #"2022-09-06 09:56:21.248526+00"
+    dataSource:
+      snapshotName: demo-pg-1662563581
+      repositoryRef:
+        name: my-s3-secret
+        namespace: demo
