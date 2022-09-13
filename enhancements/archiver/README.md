@@ -9,11 +9,11 @@ metadata:
   name: archiver-demo
   namespace: kubedb
 spec:
-  usagePolicy:
-    allowedNamespace:
-      from: <>
-      selector: <>
-    resourceSelector: <>
+  databases:
+    selector: {}
+    namespaces:
+      from:
+      selector: {}
   pause: true
   retentionPolicy:
       name: keep-last-5
@@ -115,9 +115,7 @@ spec:
       namespace: <>
   init:
     archiver:
-      pitr:
-        targetTime: ""
-        exclusive: true 
+      recoveryTimeStamp: "2020-10-28T01:48:23.121314+03:00"
       repository:
         name: gcs-storage
         namespace: stash
@@ -149,26 +147,32 @@ status:
 
 ## Stash Changes
 ### ArchiveInfo CR YAML
+
 ```yaml
 apiVersion: storage.kubestash.com/v1alpha1
-kind: ArchiveInfo
+kind: Snapshot
 metadata:
   name: sample-mongodb-backup-1561974001
   namespace: demo
 spec:
-  ulid: 01D78XYFJ1PRM1WPBCBT3VHMNV
-  repository: sample-mongodb-backup
   version: v1
+  snapshotID: 9m4e2mr0ui3e8a215n4g
+  type: IncrementalBackup
   appRef:
     apiGroup: kubedb.com
     kind: MongoDB
     name: sample-mongodb
+  repository: sample-mongodb-backup
   deletionPolicy: WipeOut # One of "WipeOut, DoNotDelete"
-  paused: true
-components:
- - name: mongo-sh-0
-   path: db/mongodb/demo/sample-mongo/repository/v1/wal-g/mongo-sh-0
-   segments:
-   - start: 2020-10-28T12:11:10+03:00
-     end: 2020-10-28T12:12:10+03:00
+  snapshotTime:
+    created: "2020-07-25T17:41:28Z"
+    lastUpdated: "2020-07-25T17:41:28Z"
+  components: # Information about individual components
+    - name: mongo-sh-0
+      path: repository/v1/wal-g/mongo-sh-0 # relative to repository
+      phase: Succeeded
+      driver: WalG
+      walSegment:
+        start: 2020-10-28T12:11:10+03:00
+        end: 2020-10-28T12:11:10+03:00
 ```
