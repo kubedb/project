@@ -115,7 +115,7 @@ spec:
       namespace: <>
   init:
     archiver:
-      pitr: "2020-10-28T01:48:23.121314+03:00"
+      recoveryTimeStamp: "2020-10-28T01:48:23.121314+03:00"
       repository:
         name: gcs-storage
         namespace: stash
@@ -156,7 +156,7 @@ metadata:
   namespace: demo
 spec:
   version: v1
-  xid: 9m4e2mr0ui3e8a215n4g
+  snapshotID: 9m4e2mr0ui3e8a215n4g
   type: IncrementalBackup
   appRef:
     apiGroup: kubedb.com
