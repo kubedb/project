@@ -75,11 +75,11 @@ metadata:
   name: archiver-ops-demo
   namespace: demo
 spec:
-  type: ConfigureArchiver
+  type: Backup
   databaseRef:
     name: mg-rs
   archiver:
-    operation: "Configure"/ "Disable"
+    operation: "ConfigureArchiver"/ "DisableArchiver"
     ref:
       name: "archiver-demo"
       namespace: "kubedb"
