@@ -1,0 +1,66 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: sh
+  namespace: demo
+spec:
+  version: "4.4.6"
+  shardTopology:
+    configServer:
+      replicas: 3
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "300m"
+              memory: "300Mi"
+      storage:
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: "linode-block-storage"
+    mongos:
+      replicas: 2
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "200Mi"
+    shard:
+      replicas: 2
+      podTemplate:
+        spec:
+          resources:
+            requests:
+              cpu: "400m"
+              memory: "400Mi"
+      shards: 2
+      storage:
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: "linode-block-storage"
+  terminationPolicy: WipeOut
+  arbiter:
+    podTemplate:
+      spec:
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "200Mi"
+  hidden:
+    podTemplate:
+      spec:
+        resources:
+          requests:
+            cpu: "500m"
+            memory: "500Mi"
+    replicas: 2
+    storage:
+      storageClassName: "linode-block-storage"
+      accessModes:
+        - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi

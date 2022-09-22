@@ -1,0 +1,19 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: vertical
+  namespace: demo
+spec:
+  type: VerticalScaling
+  databaseRef:
+    name: rs
+  verticalScaling:
+    arbiter:
+      requests:
+        memory: "300Mi"
+        cpu: "300m"
+    hidden:
+      requests:
+        memory: "600Mi"
+        cpu: "600m"
+
