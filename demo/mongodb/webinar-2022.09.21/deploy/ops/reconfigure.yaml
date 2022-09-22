@@ -1,0 +1,16 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: reconfigure
+  namespace: demo
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: rs
+  configuration:
+    replicaSet:
+      configSecret:
+        name: connection-conf
+    hidden:
+      configSecret:
+        name: log-conf

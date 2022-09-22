@@ -1,0 +1,13 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: expansion
+  namespace: demo
+spec:
+  type: VolumeExpansion  
+  databaseRef:
+    name: sh
+  volumeExpansion:
+    shard: 12Gi
+    hidden: 13Gi
+    mode: "Online"
