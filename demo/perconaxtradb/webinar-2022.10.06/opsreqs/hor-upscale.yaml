@@ -1,0 +1,12 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: PerconaXtraDBOpsRequest
+metadata:
+  name: hor-scale-up-px
+  namespace: test
+spec:
+  type: HorizontalScaling  
+  databaseRef:
+    name: sample-pxc
+  horizontalScaling:
+    member: 5
+  timeout: 5s
