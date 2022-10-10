@@ -1,0 +1,12 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: PerconaXtraDBOpsRequest
+metadata:
+  name: px-ops-reconfigure-add
+  namespace: test
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: sample-pxc
+  configuration:   
+    configSecret:
+      name: px-config

@@ -1,0 +1,27 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: PerconaXtraDBOpsRequest
+metadata:
+  name: px-scale-group
+  namespace: test
+spec:
+  type: VerticalScaling  
+  databaseRef:
+    name: sample-pxc
+  verticalScaling:
+    perconaxtradb:
+      requests:
+        memory: "600Mi"
+        cpu: "0.4"
+      limits:
+        memory: "600Mi"
+        cpu: "0.4"
+
+# Default resources PerconaXtraDB, Pod & Stateful Set
+
+# resources:
+#   limits:
+#     cpu: 500m
+#     memory: 1Gi
+#   requests:
+#     cpu: 500m
+#     memory: 1Gi

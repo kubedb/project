@@ -1,0 +1,33 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: PerconaXtraDBOpsRequest
+metadata:
+  name: px-recon-tls-update
+  namespace: test
+spec:
+  type: ReconfigureTLS
+  databaseRef:
+    name: sample-pxc
+  tls:
+    requireSSL: true
+    certificates:
+    - alias: server
+      subject:
+        organizations:
+        - kubedb:server
+      dnsNames:
+      - localhost
+      ipAddresses:
+      - "127.0.0.1"
+      emailAddresses:
+      - "md.alifbiswas@gmail.com"
+      certificates:
+    - alias: client
+      subject:
+        organizations:
+        - kubedb:server
+      dnsNames:
+      - localhost
+      ipAddresses:
+      - "127.0.0.1"
+      emailAddresses:
+      - "md.alifbiswas@gmail.com"
