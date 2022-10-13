@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: os-upgrade
+  namespace: demo
+spec:
+  type: Upgrade
+  databaseRef:
+    name: os-cluster
+  upgrade:
+    targetVersion: opensearch-1.3.2

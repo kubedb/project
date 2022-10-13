@@ -1,0 +1,26 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Elasticsearch
+metadata:
+  name: os-cluster
+  namespace: demo
+spec:
+  version: opensearch-1.2.2
+  enableSSL: true
+  replicas: 3
+  storageType: Ephemeral
+  podTemplate:
+    spec:
+      resources:
+        limits:
+          memory: 1.5Gi
+        requests:
+          cpu: 500m
+          memory: 1.5Gi
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut

@@ -1,0 +1,14 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: ElasticsearchOpsRequest
+metadata:
+  name: os-hscale
+  namespace: demo
+spec:
+  type: HorizontalScaling
+  databaseRef:
+    name: os-cluster
+  horizontalScaling:
+    topology:
+      master: 2
+      data: 3
+    # ingest: 2
