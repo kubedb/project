@@ -1,0 +1,33 @@
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: bytebuilders-xyz
+  namespace: demo
+spec:
+  acme:
+    # server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    email: tamal@appscode.com
+    # Name of a secret used to store the ACME account private key
+    privateKeySecretRef:
+      name: bytebuilders-xyz-acme
+    # ACME DNS-01 provider configurations
+    solvers:
+    # An empty 'selector' means that this solver matches all domains
+    - selector: {}
+      dns01:
+        cloudflare:
+          email: tamal@appscode.com
+          apiTokenSecretRef:
+            name: bytebuilders-xyz-cloudflare
+            key: api-token
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bytebuilders-xyz-cloudflare
+  namespace: demo
+type: Opaque
+stringData:
+  api-token: "$CLOUDFLARE_API_TOKEN"
