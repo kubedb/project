@@ -1,0 +1,19 @@
+provider: cloudflare
+sources:
+- ingress
+domainFilters:
+- bytebuilders.xyz
+
+env:
+- name: CF_API_TOKEN
+  value: "$CLOUDFLARE_API_TOKEN"
+
+policy: sync
+
+logLevel: debug
+
+registry: txt
+txtOwnerId: ingress-kubedb
+
+extraArgs:
+- --ignore-ingress-tls-spec

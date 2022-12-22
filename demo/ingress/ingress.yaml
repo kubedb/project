@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/issuer: bytebuilders-xyz
+  name: kubedb
+  namespace: demo
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: mysql.bytebuilders.xyz
+    http:
+      paths:
+      - backend:
+          service:
+            name: mysql-quickstart
+            port:
+              number: 3306
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - mysql.bytebuilders.xyz
+    secretName: bytebuilders-xyz-tls
