@@ -54,3 +54,15 @@ It's not important for me to setup backup for individual database from the dedic
 
 - I might put database and all the policy, storage, etc. related resources into same pipeline. I will expect things to work regardless the order of the resources being applied by the pipeline.
 - If there is any failure during the entire setup, I will expect it to be reflected into the database phase. My pipeline completion status depends on the database phase.
+
+### Questions
+
+**Should we always backup the database manifest?**
+Yes.
+
+**Should we always backup the database Secret?**
+Yes.
+
+**Backup respective KubeDB catalog?**
+
+Some user may use custom catalog. We should backup the catalog so that when they restore in a new cluster, the catalog can be re-created.
