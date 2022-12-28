@@ -45,5 +45,17 @@ My CI pipeline may apply database and other backup related resources (i.e. Backu
 ### Questions
 
 **Should we always backup the database manifest?**
+Yes.
 
 **Should we always backup the database Secret?**
+Yes.
+
+**Backup respective KubeDB catalog?**
+
+Some user may use custom catalog. We should backup the catalog so that when they restore in a new cluster, the catalog can be re-created.
+
+**How should we pause and resume database traffic before/after restore?**
+
+There could be a phase like `Halt` (maybe `Down`) in database. In this phase, the operator will remove the database from it's Service endpoint. User can chose during restore whether to automatically resume the connection or user will do it manually.
+
+We may add a extra label in the Service that will cause none of the database pod to get selected. However, we may still need another maintainance Service for our internal usage (i.e. connecting to database shell).

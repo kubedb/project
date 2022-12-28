@@ -19,9 +19,9 @@ I am database admin of my organization. I am responsible for managing how databa
 
 2. I might allow some user to use their own storage to store the backups.
 
-3. I want to pre-configure mandatory backup for some critical databases. User can't opt-out from the backup. These backups are fully managed by me. However, user should see the backups and they should be able to recover from them.
+<!-- 3. I want to pre-configure mandatory backup for some critical databases. User can't opt-out from the backup. These backups are fully managed by me. However, user should see the backups and they should be able to recover from them.
 
-4. I want to pre-configure silent backup for some databases. Those backups are used by some analytics or testing tools. So, user don't have to be aware of the backup. The backup shouldn't have any major impact the database performance. They should be hidden from the user.
+4. I want to pre-configure silent backup for some databases. Those backups are used by some analytics or testing tools. So, user don't have to be aware of the backup. The backup shouldn't have any major impact the database performance. They should be hidden from the user. -->
 
 ### From User Perspective
 
