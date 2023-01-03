@@ -1,5 +1,7 @@
 # Expose KubeDB managed MySQL server using nginx-ingress controller
 
+**Blog Post:** https://blog.byte.builders/post/expose-mysql-using-nginx-ingress/
+
 ## Install KubeDB provisioner operator
 
 ```
