@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-producer
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-producer-consumer
+  template:
+    metadata:
+      labels:
+        app: kafka-producer-consumer
+    spec:
+      containers:
+        - name: kafka-producer
+          image: raihankhanraka/kafka-publisher:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BOOTSTRAP_SERVERS
+              value: "kafka-combined-pods.demo.svc.cluster.local:9092"
+            - name: TOPIC
+              value: "demo"

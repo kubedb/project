@@ -1,0 +1,18 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Kafka
+metadata:
+  name: kafka-combined
+  namespace: demo
+spec:
+  replicas: 3
+  version: 3.3.0
+  disableSecurity: true
+  storage:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+    storageClassName: standard
+  storageType: Durable
+  terminationPolicy: DoNotTerminate
