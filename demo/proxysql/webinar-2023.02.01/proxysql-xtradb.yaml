@@ -1,0 +1,34 @@
+apiVersion: kubedb.com/v1alpha2
+kind: ProxySQL
+metadata:
+  name: proxy-server-xtradb
+  namespace: demo
+spec:
+  version: "2.3.2-debian"
+  replicas: 3
+  mode: Galera
+  backend:
+    name: xtradb-server
+  syncUsers: true
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        labels:
+          release: prometheus
+        interval: 10s
+  tls:
+    issuerRef:
+      apiGroup: cert-manager.io
+      kind: Issuer
+      name: my-issuer
+    certificates:
+      - alias: server
+        subject:
+          organizations:
+            - kubedb:server
+        dnsNames:
+          - localhost
+        ipAddresses:
+          - "127.0.0.1"
+  terminationPolicy: WipeOut
