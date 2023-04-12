@@ -1,0 +1,13 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Repository
+metadata:
+  name: linode-repo
+  namespace: demo
+spec:
+  backend:
+    s3:
+      endpoint: https://us-southeast-1.linodeobjects.com
+      bucket: mg-test
+      region: us-southeast-1
+      prefix: /mg-test/stash
+    storageSecretName: storage

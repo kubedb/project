@@ -1,0 +1,39 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mg-rs
+  namespace: demo
+spec:
+  version: "6.0.5"
+  sslMode: requireSSL
+  tls:
+    issuerRef:
+      name: mongo-ca-issuer
+      kind: Issuer
+      apiGroup: "cert-manager.io"
+  clusterAuthMode: x509
+  replicaSet: 
+    name: "replicaset"
+  replicas: 3
+  podTemplate:
+    spec:
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "512Mi"
+  configSecret:
+    name: custom-config
+  storage:
+    storageClassName: "linode-block-storage"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 10Gi
+  monitor:
+    agent: prometheus.io/operator
+    prometheus:
+      serviceMonitor:
+        interval: 30s
+        labels:
+          release: prometheus

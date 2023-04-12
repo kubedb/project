@@ -1,0 +1,12 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: vol-exp
+  namespace: demo
+spec:
+  type: VolumeExpansion  
+  databaseRef:
+    name: mg-rs
+  volumeExpansion:
+    mode: Offline
+    replicaSet: 20Gi

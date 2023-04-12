@@ -1,0 +1,15 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: RestoreSession
+metadata:
+  name: mg-rs-restore
+  namespace: demo
+spec:
+  repository:
+    name: linode-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: mg-rs
+  rules:
+  - snapshots: [latest]

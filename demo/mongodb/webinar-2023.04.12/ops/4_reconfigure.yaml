@@ -1,0 +1,15 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: reconfigure
+  namespace: demo
+spec:
+  type: Reconfigure
+  databaseRef:
+    name: mg-rs
+  configuration:
+    replicaSet:
+      applyConfig:
+        mongod.conf: |
+          net:
+            maxIncomingConnections: 30000

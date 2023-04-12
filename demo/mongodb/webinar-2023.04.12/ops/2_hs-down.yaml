@@ -1,0 +1,11 @@
+apiVersion: ops.kubedb.com/v1alpha1
+kind: MongoDBOpsRequest
+metadata:
+  name: hs-down
+  namespace: demo
+spec:
+  type: HorizontalScaling
+  databaseRef:
+    name: mg-rs
+  horizontalScaling:
+    replicas: 3
