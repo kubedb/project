@@ -1,0 +1,18 @@
+apiVersion: stash.appscode.com/v1beta1
+kind: BackupConfiguration
+metadata:
+  name: mg-rs-backup
+  namespace: demo
+spec:
+  schedule: "0 0 * 12 *"
+  repository:
+    name: linode-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: mg-rs
+  retentionPolicy:
+    name: keep-last-5
+    keepLast: 5
+    prune: true
