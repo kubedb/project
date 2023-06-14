@@ -8,6 +8,7 @@ clusteradm get token
 
 ## Clustersets
 
+```
 clusteradm create clusterset app1
 clusteradm clusterset set app1 --clusters c1
 
@@ -26,6 +27,7 @@ clusteradm clusterset bind app2 --namespace app2
 > clusteradm clusterset bind global --namespace kubeops
 
 > clusteradm get clustersets
+```
 
 ```
 <ManagedClusterSet> 
