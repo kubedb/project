@@ -1,0 +1,9 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: app2
+  namespace: app2
+spec:
+  # numberOfClusters: 2
+  clusterSets:
+    - app2

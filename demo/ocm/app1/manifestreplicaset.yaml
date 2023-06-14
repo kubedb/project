@@ -1,0 +1,53 @@
+apiVersion: work.open-cluster-management.io/v1alpha1
+kind: ManifestWorkReplicaSet
+metadata:
+  name: db
+  namespace: app1
+spec:
+  placementRefs:
+    - name: app1
+  manifestWorkTemplate:
+    # deleteOption:
+    #   propagationPolicy: SelectivelyOrphan
+    #   selectivelyOrphans:
+    #     orphaningRules:
+    #       - group: ''
+    #         name: ocm-ns
+    #         namespace: ''
+    #         resource: Namespace
+    # manifestConfigs:
+    #   - feedbackRules:
+    #       - jsonPaths:
+    #           - name: lastScheduleTime
+    #             path: .status.lastScheduleTime
+    #           - name: lastSuccessfulTime
+    #             path: .status.lastSuccessfulTime
+    #         type: JSONPaths
+    #     resourceIdentifier:
+    #       group: batch
+    #       name: sync-cronjob
+    #       namespace: ocm-ns
+    #       resource: cronjobs
+    workload:
+      manifests:
+        - kind: Namespace
+          apiVersion: v1
+          metadata:
+            name: app1
+
+        - apiVersion: kubedb.com/v1alpha2
+          kind: Postgres
+          metadata:
+            name: quick-postgres
+            namespace: app1
+          spec:
+            version: "13.2"
+            storageType: Durable
+            storage:
+              storageClassName: "standard"
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi
+            terminationPolicy: Delete
