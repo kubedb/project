@@ -1,10 +1,12 @@
 # ocm Demo
 
+```
 sudo apt install python-is-python3
 
 sudo sysctl fs.inotify.max_user_instances=65534
 
 clusteradm get token
+```
 
 ## Clustersets
 
