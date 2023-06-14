@@ -26,6 +26,8 @@ clusteradm clusterset bind app2 --namespace app2
 > clusteradm clusterset bind global --namespace kubeops
 
 > clusteradm get clustersets
+
+```
 <ManagedClusterSet> 
 └── <app2> 
 │   ├── <BoundNamespace> app2
@@ -43,3 +45,4 @@ clusteradm clusterset bind app2 --namespace app2
     └── <BoundNamespace> app1
     └── <Status> 1 ManagedClusters selected
     └── <Clusters> [c1]
+```
