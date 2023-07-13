@@ -1,3 +1,15 @@
+apiVersion: cluster.open-cluster-management.io/v1beta1
+kind: Placement
+metadata:
+  name: global
+  namespace: kubeops
+spec:
+  # numberOfClusters: 2
+  clusterSets:
+    - global
+
+---
+
 apiVersion: work.open-cluster-management.io/v1alpha1
 kind: ManifestWorkReplicaSet
 metadata:
@@ -140,3 +152,35 @@ spec:
                 enabled: false
               kubedb-dashboard:
                 enabled: false
+                
+        - apiVersion: helm.toolkit.fluxcd.io/v2beta1
+          kind: HelmRelease
+          metadata:
+            name: stash
+            namespace: kubeops
+          spec:
+            interval: 5m
+            timeout: 30m
+            releaseName: stash
+            targetNamespace: stash
+            storageNamespace: stash
+            chart:
+              spec:
+                chart: stash
+                version: "v2023.05.31"
+                sourceRef:
+                  kind: HelmRepository
+                  name: appscode
+                  namespace: kubeops
+            install:
+              createNamespace: true
+              crds: CreateReplace
+              remediation:
+                retries: -1
+            upgrade:
+              crds: CreateReplace
+              remediation:
+                retries: -1
+            values:
+              features:
+                enterprise: true
