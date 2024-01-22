@@ -1,0 +1,12 @@
+apiVersion: addons.kubestash.com/v1alpha1
+kind: Function
+metadata:
+  name: postgres-volume-snapshot
+spec:
+  args:
+  - backup
+  - --db=${DB_NAME:=}
+  - --namespace=${DB_NAMESPACE:=}
+  - --volume-snapshot-class-name=${VOLUME_SNAPSHOT_CLASS_NAME:=}
+  - --backup-session=${backupSession:=}
+  image: rakibulhossain/postgres-snapshotter-plugin:new_branch_linux_amd64

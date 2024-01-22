@@ -1,0 +1,10 @@
+apiVersion: addons.kubestash.com/v1alpha1
+kind: Addon
+metadata:
+  name: postgres-volume-snapshot
+spec:
+  backupTasks:
+    - name: snapshot
+      function: postgres-volume-snapshot
+      singleton: true
+      executor: Job  

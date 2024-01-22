@@ -1,0 +1,11 @@
+apiVersion: addons.kubestash.com/v1alpha1
+kind: Function
+metadata:
+ name: kubedb-manifest-restore
+spec:
+ image: rakibulhossain/kubedb-manifest:postgres-walg_linux_amd64
+ args:
+ - restore
+ - --namespace=${namespace:=default}
+ - --restoreSession=${restoreSession:=}
+ - --snapshotName=${snapshotName:=}

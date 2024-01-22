@@ -1,0 +1,20 @@
+apiVersion: core.kubestash.com/v1alpha1
+kind: BackupSession
+metadata:
+  finalizers:
+  - kubestash.com/cleanup
+  name: demo-pg-backup-config-manifest-1693465803
+  namespace: demo
+  ownerReferences:
+  - apiVersion: core.kubestash.com/v1alpha1
+    blockOwnerDeletion: true
+    controller: true
+    kind: BackupConfiguration
+    name: demo-pg-backup-config
+    uid: 00ada2d1-c49d-4d05-bff7-dcaf56c605e3
+spec:
+  invoker:
+    apiGroup: core.kubestash.com
+    kind: BackupConfiguration
+    name: demo-pg-backup-config
+  session: manifest
