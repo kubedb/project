@@ -1,0 +1,18 @@
+apiVersion: kubedb.com/v1alpha2
+kind: ZooKeeper
+metadata:
+  name: zk-cluster
+  namespace: demo
+spec:
+  version: "3.7.2"
+  replicas: 3
+  disableAuth: false
+  storage:
+    resources:
+      requests:
+        storage: "100Mi"
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteOnce
+  terminationPolicy: "WipeOut"
+

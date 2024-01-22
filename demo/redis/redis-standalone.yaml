@@ -1,0 +1,18 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Redis
+metadata:
+  name: redis-standalone
+  namespace: demo
+spec:
+  version: 7.2.3
+  replicas: 1
+  disableAuth: true
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  terminationPolicy: WipeOut
