@@ -1,0 +1,15 @@
+apiVersion: addons.kubestash.com/v1alpha1
+kind: Addon
+metadata:
+  name: kubedb-manifest-backup
+spec:
+  backupTasks:
+    - name: manifest-backup
+      function: kubedb-manifest-backup
+      singleton: true
+      executor: Job  
+  restoreTasks:
+    - name: manifest-restore
+      function: kubedb-manifest-restore
+      singleton: true
+      executor: Job

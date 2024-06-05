@@ -1,0 +1,24 @@
+apiVersion: kubedb.com/v1alpha2
+kind: Postgres
+metadata:
+  name: demo-pg
+  namespace: demo
+  labels:
+    archiver: "true"
+spec:
+  version: "13.6-bullseye"
+  replicas: 3
+  standbyMode: Hot
+  storageType: Durable
+  storage:
+    storageClassName: "longhorn"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 1Gi
+  archiver:
+    ref:
+      name: postgresarchiver-sample
+      namespace: demo
+  terminationPolicy: WipeOut

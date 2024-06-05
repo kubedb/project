@@ -1,0 +1,11 @@
+apiVersion: addons.kubestash.com/v1alpha1
+kind: Function
+metadata:
+  name: kubedb-manifest-backup
+spec:
+  image: rakibulhossain/kubedb-manifest:postgres-walg_linux_amd64
+  args:
+  - backup
+  - --scratchDir=${scratchDir:=/tmp}
+  - --namespace=${namespace:=default}
+  - --backupSession=${backupSession:=}

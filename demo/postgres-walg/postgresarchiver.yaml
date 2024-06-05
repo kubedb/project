@@ -1,0 +1,38 @@
+apiVersion: archiver.kubedb.com/v1alpha1
+kind: PostgresArchiver
+metadata:
+  name: postgresarchiver-sample
+  namespace: demo
+spec:
+  pause: false
+  databases:
+    namespaces:
+      from: Selector
+      selector:
+        matchLabels:
+         kubernetes.io/metadata.name: demo
+    selector:
+      matchLabels:
+        archiver: "true"
+  retentionPolicy:
+    name: postgres-retention-policy
+    namespace: demo
+  fullBackup:
+    driver: "CSISnapshotter"
+    csiSnapshotter:
+      volumeSnapshotClassName: "longhorn-snapshot-vsc"
+    scheduler:
+      schedule: "*/5 * * * *"
+  manifestBackup: 
+    encryptionSecret: 
+      name: "encrypt-secret"
+      namespace: "demo"
+    scheduler: 
+      schedule: "*/10 * * * *"
+  backupStorage:
+    ref:
+      apiGroup: "storage.kubestash.com"
+      kind: "BackupStorage"
+      name: "linode-storage"
+      namespace: "demo"
+                              
